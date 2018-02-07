@@ -1,0 +1,6 @@
+.cproject
+.project
+*.yml
+Makefile
+CMakeCache.txt
+CMakeFiles/
