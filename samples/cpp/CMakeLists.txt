@@ -24,7 +24,7 @@ if(CMAKE_VERSION VERSION_LESS "2.8.11")
 endif()
 
 # Declare the executable target built from your sources
-add_executable(opencv_example matchmethod_orb_akaze_brisk.cpp)
+add_executable(opencv_example surf_keypoint_matcher.cpp)
 
 # Link your application with OpenCV libraries
 target_link_libraries(opencv_example ${OpenCV_LIBS})
