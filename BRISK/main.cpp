@@ -9,8 +9,8 @@ int main(void)
 {
 	vector<String> fileName;
 
-	fileName.push_back("../Resources/r_s.jpg");
-	fileName.push_back("../Resources/rock_b.jpg");
+	fileName.push_back("../Resources/rock_s_60_r.jpg");
+	fileName.push_back("../Resources/rock_s.jpg");
 
 	Mat img1 = imread(fileName[0], IMREAD_GRAYSCALE);
 	Mat img2 = imread(fileName[1], IMREAD_GRAYSCALE);
@@ -61,12 +61,24 @@ try {
 	}
 	sortIdx(tab, index, SORT_EVERY_COLUMN + SORT_ASCENDING);
 	vector<DMatch> bestMatches;
-
-	for (int i = 0; i < 10; i ++) {//nbMatch
+float scal = 0.0f;
+float l1, l2;
+float x1, y1, x2, y2;
+	for (int i = 0; i < 20; i ++) {//nbMatch
 		bestMatches.push_back(matches[index.at<int>(i, 0)]);
+x1 = keyImg1[bestMatches[i].queryIdx].pt.x;
+y1 = keyImg1[bestMatches[i].queryIdx].pt.y;
+x2 = keyImg2[bestMatches[i].trainIdx].pt.x;
+y2 = keyImg2[bestMatches[i].trainIdx].pt.y;
+l1 = sqrtf(x1 * x1 + y1 * y1);
+l2 = sqrtf(x2 * x2 + y2 * y2);
 cout << i << ": " << keyImg1[bestMatches[i].queryIdx].pt.x << ", " << keyImg1[bestMatches[i].queryIdx].pt.y << "\t";
-cout << " -> " << keyImg2[bestMatches[i].trainIdx].pt.x << ", " << keyImg2[bestMatches[i].trainIdx].pt.y << endl;
+cout << " -> " << keyImg2[bestMatches[i].trainIdx].pt.x << ", " << keyImg2[bestMatches[i].trainIdx].pt.y << "\t";
+cout << "scale: " << l1/l2 << endl;
+scal += l1/l2;
 	}
+scal /= 20;
+cout << "scale average = " << scal << endl;
 	Mat result;
 	drawMatches(img1, keyImg1, img2, keyImg2, bestMatches, result);
 	namedWindow("BRISK: "+*itMatcher, WINDOW_AUTOSIZE);
